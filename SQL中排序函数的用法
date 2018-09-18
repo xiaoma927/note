@@ -1,0 +1,12 @@
+SQL中排序函数的用法
+SQl中的排序函数有三：row_number() over(),rank() over()以及dense_rank() over()
+
+1.row_number() over(partition by 列名 order by 列名 [desc])
+其中，partition by 是分组，在组内各自排序。
+row_number()函数是一般的排序函数，如有重复，则排序也是一直递增
+
+2.rank() over(partition by 列名 order by 列名 [desc])
+rank()函数是跳跃排序，如有两个第2名，则排序后为1.2.2.4名，其他与row_number()无异
+
+3.dense_rank() over(partition by 列名 order by 列名 [desc])
+dense_rank()函数是连续排序，如有两个第2名，则排序后为1.2.2.3，其他与row_number()无异
