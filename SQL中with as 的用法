@@ -1,0 +1,6 @@
+with 表名1 as (select * from ***),
+表名2 as (select * from ***),
+表名3 as (select * from ***)
+select * from 表名1
+
+注：with as 的用法就是，把其他的查询结果作为一个表,然后后期可以直接从该表查询，可以连用多个with as，只有第一个需用with,后面就不用了。
