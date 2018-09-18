@@ -10,3 +10,5 @@ rank()函数是跳跃排序，如有两个第2名，则排序后为1.2.2.4名，
 
 3.dense_rank() over(partition by 列名 order by 列名 [desc])
 dense_rank()函数是连续排序，如有两个第2名，则排序后为1.2.2.3，其他与row_number()无异
+
+这几个函数都只能在SQL server中使用，MySQL中无法使用
