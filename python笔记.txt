@@ -1,0 +1,188 @@
+﻿python 数据类型
+    python有五种标准的数据类型：
+    Number数字
+    String字符串
+    List列表
+    Tuple元组
+    Dictionary字典
+
+一、序列
+    在几乎所有的情况下，列表都可以替代为元组
+   1.列表（可修改）
+	list = [1,2,3,4]
+	列表常见操作：索引，分片，加，乘，成员资格，长度（len），最值(max min)等
+	索引：greeting = 'hello' greeting[0] = 'h'   字符串就是由字符组成的序列,由于字符串是不可变的，所有把字符串变成列表是常见的操作。
+	      list('hello') 结果 就是 ['h' 'e' 'l' 'l' 'o']
+	      greeting[-1] = 'o'   -1索引是从后面往前索引，依次是-1，-2，-3...
+	分片：list[1:2] = [2]   分片操作为前闭后开，包括前者索引，不包括后者索引
+	      特殊的分片：list[2:]   list[:3]  list[:]  list[start:end:step]   step也可以是负数，向左索引
+	序列相加：只有相同类型的序列才可以相加，通过相加，进行序列的连接操作，a = [1,2,3]  b = [1,2]  a+b = [1,2,3,1,2]
+	序列相乘：用数字n乘以一个序列，会得到一个新的序列，重复原来原来元素n次
+	空列表：sequence = [none] * 10   得到一个含有10个元素的空列表
+	成员资格：in 考察元素是否在列表中
+
+	列表的基本操作：
+	改变元素的值：list[2] = 3   重新赋值
+	删除元素：del list[1]  删除索引为1的元素，返回被删除的元素，也可以分片删除   del list[1:3]
+	分片赋值：list[1:3] = a  list[1:3] = [1,2,3,4]  可以使用与原序列切片长度不等的序列进行赋值 
+
+	列表方法：list = [1,2,3,4,5]
+	list.append(x):  list.append(6)---->  list = [1,2,3,4,5,6]  append方法直接修改元列表，不产生新列表
+	list.count(x):统计某个元素在列表中出现的次数   list.count(1)
+	list.extend(seq):在列表末尾一次性添加多个元素  a = [1,2,3]  b = [1,2]  a.extend(b) 与连接操作效果一样，但连接操作返回新列表，
+	       extend操作修改原列表
+	list.index(x):在列表中找出与某个值匹配的第一个值的索引位置   list.index(1)
+	list.insert(index,obj):将对象插入到列表中  num = [1,2,3,4]  num.insert(2,'a')  ---->   num = [1,2,'a',3,4]
+	list.pop(x): 移除元素，默认是最后一个元素，并返回该元素的值
+	list.remove(x):移除列表中某个值的第一个匹配项，该方法修改了列表，但没有返回值
+	list.reverse():反向存放列表元素
+	list.sort(fun):排序  直接在原列表上排序，sorted方法是返回一个已经排序的副本  sort有两个可选的参数key 和 reverse  ,key提供一个函数，
+	     标明排序过程中所使用的函数，reverse 是一个布尔值，标明是否反向排序
+
+   2.元组（不可修改)
+        元组是用圆括号（）括起来的一些元素，用逗号隔开，即使只有一个值，也要加逗号
+	tuple()函数，以一个序列作为参数返回一个元组
+
+   3.字符串方法
+       find():在一个较长字符串中查找子字符串的方法，返回子串所在位置的最左端索引，如果没有找到返回-1
+       join():split()方法的逆，在队列中添加元素
+       lower():转变成小写
+       replace():返回某字符串中所有匹配项均被替换之后得到的字符串
+       split():join()方法的逆，分割字符串得到序列
+       strip():除去两段空格
+
+       string.capitalize():把字符串第一个字符大写
+       string.upper():转化为大写
+       string.lower():转化为小写
+       string.title():返回标题化的字符串，即首字母大写，驼峰式
+       string.swapcase():转化大小写
+       string.count(str,begin = 0, end = len(string)):查找str子字符串出现的次数
+       string.endwith(str,begin = 0, end = len(string)):检查字符串是否以str结尾
+       string.find(str,begin = 0, end = len(string)):检查str是否包含在string中，是，返回开始的索引，否：返回-1
+       string.index(str,begin = 0, end = len(string)):同上，如果否，报异常
+       string.join(seq):以string作为分隔符，将seq序列中的所有元素合并成一个字符串
+       string.split(str):以str作为分隔符，分割字符串
+
+   4.字典
+       字典是一种可变容器，且可以存储任意对象，键必须唯一，值不必，值可以取任意数据类型，键必须是不可变的，如字符串，数字，元组等。
+       phonebook = {'xiaoma':927,'xujing':168}
+       可以用dict()函数通过其他字典或者键值对序列来创建字典
+       例如：items = [('name','xiaoma'),('age',23)]
+             d = dict(items)
+	     
+       基本的字典操作：
+       len(d):长度
+       d[key]:返回关联到键key上的值
+       d[key] = v：赋值
+       del d[key]: 删除键为key的项
+       key in d:检查key 是否在d中
+
+       字典方法：
+       d.clear():清空字典
+       del dict[key]:删除某一项
+       del dict:删除字典
+       d.copy():浅复制，要想深复制，需要使用copy模块下的deepcopy()函数来完成，具体：
+                from copy import deepcopy
+		c = deepcopy(d)
+       dict.fromkeys(['name','age'])   用给定的两个键来创建一个字典，值为none
+       d.get(key):访问字典中项的方法，如果直接用d[key]也可以访问，区别就是get()方法如果访问不存在的键不会出现异常，返回none
+       d.has_key(key):检查字典中是否含有给出的键
+       d.items():返回由键值对组成的序列，但没有顺序
+       d.iteritems():同上，但是返回一个迭代器对象
+       d.keys()：返回字典中的键组成的序列
+       d.iterkeys()：返回针对键的迭代器对象
+       d.values():返回字典汇总的值组成的序列
+       d.itervalues():返回值的迭代器
+       d.pop(key):移除给定键对应的项
+       d.popitem():弹出字典随机的项
+       d.updete():用一个字典去更新另外一个字典，如果有相同的键，就替换
+
+二、各种类型相互之间的转换
+	str(x)   将对象 x 转换为字符串
+	tuple(x)  将序列x转化为元组
+	list(x)   将序列x转化为一个列表
+	set(x)    转化为可变集合
+	chr(x)    将一个整数转化为字符串
+	ord(x)    将一个字符转化为它的整数值
+	unichr(x)   将一个整数转化为它对应的字符
+
+三、python日期和时间
+       首先要先引入time和calendar模块
+       即：import time,calendar
+       time.time():以浮点数形式返回时间戳
+       time.localtime(secs):接收一个时间戳，返回当前时间9个数字的时间元组
+       time.mktime([tupletime]):接收一个时间元组，返回时间戳
+       time.asctime([tupletime]):接收一个时间元组，返回一个形式为“Mon Jun 12 14:01:06 2017”的字符串
+       time.strftime(format,[tupletime]):接收一个时间元组，格式化时间
+       time.clock():以浮点数计算的秒数返回当前的CPU时间，用来衡量程序的不同耗时
+       time.sleep(secs):推迟调用线程的运行
+       
+四、python函数
+	1、未知多个参数的函数
+	加了星号(*)的参数为不定长参数列表
+	例如：
+	def hah(agr1,*aa):
+	    for a in aa:
+		print agr1**a
+
+	hah(2,3,4,5)
+	结果为：8,16,32
+	其中，*aa为一个不定长元组
+
+	2、匿名函数
+	用lambda来创建匿名函数
+	格式如下：
+	lambda [arg1,arg2,...]:expression
+	例如：
+	sum = lambda arg1,arg2 : arg1 + arg2
+	其实，lambda匿名函数更像是一个表达式，而不是一个代码块，仅能把lambda中有限的逻辑装进去
+五、基本I/O函数
+	1、读取键盘输入的两个函数
+	(1)raw_input():从标准输入读取一个行，并返回一个字符串
+	(2)input():和raw_input()基本类似，但input()可以接受一个python表达式作为输入，并返回该表达式的值
+
+	2、读取文件
+	fo = open(filename,modle):以某种模式打开一个文件，创建一个file对象
+	模式有：
+	r:只读，默认模式
+	r+:读写，文件指针放在开头
+	w:只写，如果文件已存在，则覆盖，如不存在，则创建新文件
+	w+:读写，如果文件已存在，则覆盖，如不存在，则创建新文件
+	a:追加，如文件已存在，指针放在末尾，如不存在，则创建新文件进行写入
+	a+:读写，指针放在末尾，追加模式，如文件不存在，则创建新文件进行读写
+	
+	fo.read():读取文件
+	fo.write(str)：写入文件
+
+六、杂项
+
+	np.tile(A,reps): 把A复制reps次
+	举例：
+	a = [1,2]
+	b = np.tile(a,3)
+	c = np.tile(a,(3,1))
+
+	则b = [1,2,1,2,1,2]
+	c = [[1 2]
+	     [1 2]
+	     [1 2]]
+
+	argsort():排序，返回的是排序后的index,针对于矩阵使用
+	举例：
+	a = [1,4,5,2,8,3,6]
+	b = a.argsort()
+	则b = [0,3,5,1,2,6,4]
+
+	dict.get(key,default):在字典里查找key对应的值，如果找不到就返回default
+	
+
+	sorted(iterable, cmp=None, key=None, reverse=False):排序函数
+	其中，参数说明如下：
+	iterable:可迭代类型
+	cmp:用于比较的函数，比较什么由key决定
+	key：用列表元素的某个属性或函数进行作为关键字，有默认值，迭代集合中的一项
+	reverse：排序规则. reverse = True  降序 或者 reverse = False 升序，有默认值
+	返回值：是一个经过排序的可迭代类型，与iterable一样
+	
+
+        

@@ -1,0 +1,83 @@
+pandas笔记
+一、Serise
+	Serise 类似于一维数组的对象，例如：
+	import pandas as pd
+	obj = pd.Series([1,2,3,4,5])
+	print obj
+	结果：
+	0    1
+	1    2
+	2    3
+	3    4
+	4    5
+	索引在左，值在右
+
+	还可以创建带索引的Series,例如：
+	obj2 = pd.Series([1,2,3,4],index=['a','b','c','d'])
+	print obj2
+	print obj2.values
+	结果：
+	a    1
+	b    2
+	c    3
+	d    4
+	
+	再如：
+	data = [100,120,130,148]
+	index = ['yuwen','yingyu','shuxue','lizong']
+	s = pd.Series(data = data,index = index)
+	print s
+	结果：
+	yuwen     100
+	yingyu    120
+	shuxue    130
+	lizong    148
+
+
+	选取Series中的值，
+	obj[1]	       选取一个值
+	obj[[1,2,3]]   同时选取多个值，obj[]里面传入一个序列
+	print obj[obj>3]  选取值大于3的项
+
+二、DataFrame
+	构造DataFrame的方法，最常用的是传入一个由等长的列表构成的字典
+	即：
+	data = {'name':['zhangsan','lisi','wangwu'],
+		'age':[23,24,25],
+		'address':['shanghai','chongqing','yanan']}
+	df = pd.DataFrame(data)
+	print df
+	结果：
+	     address  age      name
+	0   shanghai   23  zhangsan
+	1  chongqing   24      lisi
+	2      yanan   25    wangwu
+
+	构造dataframe时，如果指定了序列，则可以按照指定的序列构造DataFrame，即：
+	df = pd.DataFrame(data,columns=['name','age','address'])
+
+	结果：
+	       name  age    address
+	0  zhangsan   23   shanghai
+	1      lisi   24  chongqing
+	2    wangwu   25      yanan
+
+	
+	print df['name']
+	print df.name
+	这两种方法都可以访问DataFrame中的一个Series
+
+	以df为例，来讲解DataFrame的基本操作：
+	df = pd.DataFrame(np.arange(16).reshape(4,4),columns = ['a','b','c','d'],index = ['x','y','z','w'])
+	print df
+	结果：
+	    a   b   c   d
+	x   0   1   2   3
+	y   4   5   6   7
+	z   8   9  10  11
+	w  12  13  14  15
+	
+	print df.columns   # 打印列名
+	print df.index     # 打印行名
+	print df.ix[1,1]   # 用df.ix[columns,index] 来索引具体行和列
+ 	print df.ix[[3,2,1],2:] # 选择多行和多列

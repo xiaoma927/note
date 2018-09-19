@@ -1,0 +1,29 @@
+python画图
+python画图需要用到matplotlib.pyplot模块，所以，先引入：import matplotlib.pyplot as plt
+
+一、画折线图和散点图
+	x = range(10)
+	y = [12,23,34,45,67,89,90,99,102,120]
+	plt.plot(x,y)   //折线图，如果画散点图，换成plt.plot(x,y,'o')命令即可
+	plt.show()
+
+	线条颜色可选：
+	b:blue
+	r:red
+	g:green
+	y:yellow
+	w:white
+	k:black
+	
+	线条样式：
+	'--','.',':'等
+	plt.title('title')：加标题
+	plt.xlabel('xxx)：添加x轴标题
+	plt.ylabel('xxx’）：添加y轴标题
+	plt.legend():添加图例
+
+二、画直方图
+	用plt.hist(data)命令
+
+
+	

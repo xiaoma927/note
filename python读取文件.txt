@@ -1,0 +1,77 @@
+﻿python 读取文件操作
+
+#################
+# 读取文本文件：#
+#################
+file = open('F:\\data\\test.txt')   //open函数默认打开方式为'r'
+txt = file.read()
+file.close()
+
+file.read()方法一次性读取所有文本文件中的文本，返回字符串形式
+也可以按行读取，用方法file.readline(),只读取文件中的一行数据
+readline()函数返回当前句柄所在行的文本，并把句柄往下移动一行
+
+
+#################
+# 写入文本文件：#
+#################
+
+file = open('F:\\data\\a.txt','w')    //用w方式打开，即可写，即使文件不存在也可以自动创建文件
+file.write(str)
+file.close()
+
+如若需要追加模式，用'a'模式打开文件即可   即file = open('F:\\data\\a.txt','a')
+
+
+#################
+#  读取csv文件：#
+#################
+
+读取csv文件可以直接用csv模块，先引入模块：import csv
+csv_reader = csv.reader(open('F:\\data\\trees.csv'))
+for row in csv_reader:
+    print row
+
+上述代码演示了从csv文件中获取数据，不能读取中文，函数返回结果是把csv文件中的每一行都转化为一个list
+
+
+#################
+#  写入csv文件：#
+#################
+
+具体代码：
+arr = np.array(range(10))
+csv_writer = csv.writer(open('F:\\data\\b.csv','w'))
+csv_writer.writerow(arr)
+print series
+
+csv.writerow()函数,其参数是list类型，可以将一个数一维数组写进csv文件中，如果是二维数组，也只能以一维数组的形式写入
+如是series类型，也只能写入series的值，转换成一行数据，并且，此方法写入数据后会在每一行后面多个空行，解药：用'wb'模式打开即可
+
+
+#################
+#numpy 读写文件 #
+#################
+
+np.loadtxt()和np.savetxt()两个函数
+用法：np.loadtxt(filename,delimiter = ',',usecols = (需要选取的列))，源文件中不能有标题，返回结果为ndarray
+      np.savetxt(filename,data)
+
+np.fromfile()和np.tofile()两个函数
+
+
+
+
+#################
+#pandas读写文件 #
+#################
+
+pd.to_csv(path,columns, header, index,  encoding)
+pd.read_csv(path)
+
+pd.to_excel()
+pd.read_excel()
+
+
+
+

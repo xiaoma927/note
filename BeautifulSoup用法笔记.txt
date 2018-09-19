@@ -1,0 +1,93 @@
+BeautifulSoup用法笔记
+
+1、遍历文档树
+  操作文档树最简单的方法就是告诉它你想获取的tag的name.如果想获取 <head> 标签,只要用 soup.head
+  例 ：soup.head
+       # <head><title>The Dormouse's story</title></head>
+  可以在文档树的tag中多次调用这个方法.下面的代码可以获取<body>标签中的第一个<b>标签:
+  例 ：soup.body.b
+       # <b>The Dormouse's story</b>
+  但是，通过点取属性的方式只能获得当前名字的第一个tag
+
+  .contents 与 .contents
+  tag的 .contents 属性可以将tag的子节点以列表的方式输出，字符串没有 .contents 属性,因为字符串没有子节点
+  通过tag的 .children 生成器,可以对tag的子节点进行循环。但是，.contents 和 .children 属性仅包含tag的直接子节点
+  
+  .descendants
+  .descendants 属性可以对所有tag的子孙节点进行递归循环
+  
+  .string
+  如果tag只有一个 NavigableString 类型子节点,那么这个tag可以使用 .string 得到子节点,如果tag包含了多个子节点,
+  tag就无法确定 .string 方法应该调用哪个子节点的内容, .string 的输出结果是 None 
+
+  .strings 与 .stripped_strings
+  如果tag中包含多个字符串 ,可以使用 .strings 来循环获取,输出的字符串中可能包含了很多空格或空行,
+  使用 .stripped_strings 可以去除多余空白内容
+
+  .parent
+  通过 .parent 属性来获取某个元素的父节点,在例子“爱丽丝”的文档中,<head>标签是<title>标签的父节点:
+  title_tag = soup.title
+  title_tag = soup.title
+  title_tag
+  # <title>The Dormouse's story</title>
+  title_tag.parent
+  # <head><title>The Dormouse's story</title></head>
+  文档title的字符串也有父节点:<title>标签,文档的顶层节点比如<html>的父节点是 BeautifulSoup 对象,BeautifulSoup 对象的 .parent 是None
+  
+  .parents
+  通过元素的 .parents 属性可以递归得到元素的所有父辈节点
+
+  .next_sibling 与 .previous_sibling
+  在文档树中,使用 .next_sibling 和 .previous_sibling 属性来查询兄弟节点
+  但是，实际文档中的tag的 .next_sibling 和 .previous_sibling 属性通常是字符串或空白，因为中间有换行符或者空格
+  
+  .next_siblings 与 .pervious_siblings
+  通过 .next_siblings 和 .previous_siblings 属性可以对当前节点的兄弟节点迭代输出
+
+2、搜索文档树
+  重点介绍find()和find_all()方法，使用 find_all() 类似的方法可以查找到想要查找的文档内容
+  find_all( name , attrs , recursive , string , **kwargs )
+
+  过滤器：
+  顾虑器可以被用在tag的name中，节点的属性中,字符串中或他们的混合中
+  最简单的过滤器是字符串.在搜索方法中传入一个字符串参数,Beautiful Soup会查找与字符串完整匹配的内容,
+  下面的例子用于查找文档中所有的<b>标签
+  soup.find_all('b')
+  # [<b>The Dormouse's story</b>]
+
+  如果传入列表参数,Beautiful Soup会将与列表中任一元素匹配的内容返回.下面代码找到文档中所有<a>标签和<b>标签
+  soup.find_all(["a", "b"])
+
+  True 可以匹配任何值,下面代码查找到所有的tag,但是不会返回字符串节点
+  for tag in soup.find_all(True):
+    print(tag.name)
+
+3、按CSS搜索
+   标识CSS类名的关键字 class 在Python中是保留字,使用 class 做参数会导致语法错误，所以，可以通过 class_ 参数搜索有指定CSS类名的tag
+   例 ：soup.find_all("a", class_="sister")
+
+   limit参数
+   find_all() 方法返回全部的搜索结构,如果文档树很大那么搜索会很慢.如果我们不需要全部结果,可以使用 limit 
+   参数限制返回结果的数量.效果与SQL中的limit关键字类似,当搜索到的结果数量达到 limit 的限制时,就停止搜索返回结果.
+   例 ：soup.find_all("a", limit=2)
+   
+   recursive参数
+   调用tag的 find_all() 方法时,Beautiful Soup会检索当前tag的所有子孙节点,如果只想搜索tag的直接子节点,可以使用参数 recursive=False
+
+   find_all()几乎是Beautiful Soup中最常用的搜索方法,所以我们定义了它的简写方法. BeautifulSoup 对象和 tag 对象可以被当作一个方法来使用,
+   这个方法的执行结果与调用这个对象的 find_all() 方法相同,下面两行代码是等价的:
+   soup.find_all("a")
+   soup("a")
+
+   这两行代码也是等价的:
+   soup.title.find_all(string=True)
+   soup.title(string=True)
+
+   find_all()方法会返回符合条件的所有的tag，所以，当需要返回第一个tag时，就可以用find()方法，尽管也可以用find_all(tag，limit = 1)，但是
+   find_all()返回一个结果的列表，find()直接返回结果，find_all() 方法没有找到目标是返回空列表, find() 方法找不到目标时,返回 None
+
+   关于find方法还有：
+   find_parents() 与 find_parent()
+   find_next_siblings() 与 find_next_sibling()
+   find_previous_siblings() 和 find_previous_sibling()
+

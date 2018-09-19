@@ -1,0 +1,137 @@
+python画图笔记
+
+一、numpy部分笔记
+    np.loadtxt()函数用法
+    np.loadtxt(filename,delimiter = ',',skiprows = 1,usecols = (1,2,3),unpack = False)
+    具体参数：
+    filename:文件名
+    delimiter:分隔符
+    sikprows:是否跳过标题行
+    usecols:选取哪些列
+    unpack:是否分割成几个数据，比如：a,b,c = np.loadtxt(...,usecols = (1,2,3),unpack = True)
+    就是把第1,2,3当成变量a,b,c
+
+    np.savetxt()函数
+    用于保存数据到文件
+
+二、python画图
+
+    import matplotlib.pyplot as plt
+    
+    画散点图：plt.scatter()
+    x = [154,164,167,170,172,175]
+    y = [60,61,61,66,70,73]
+    plt.scatter(x,y)
+    plt.show()
+
+    散点图外观调整：
+    颜色：c = 'r','b'
+    点的大小：s = 10,20..
+    透明度：alpha = 0.5
+    点形状：marker = '<',官网有marker标志
+
+    画折线图：plt.plot()函数默认就是折线图
+    x = np.linspace(-10, 10, 100)   ## np.linspace()函数生成等间隔的数据点
+    y = x**2
+    plt.plot(x,y)
+    plt.show()
+
+    折线图外观调整：
+    线形：linestyle:
+    颜色：color:
+    点形状：marker:
+    
+    画条形图：plt.bar()
+    x = [20,15,27,38,30,20,10,50,58]
+    n = np.shape(x)[0]
+    index = np.arange(n)
+    plt.bar(left = index, height = x, width = 0.3)
+    plt.show()
+
+    基本参数：
+    left:
+    height:变量
+    width:默认0.8，指宽度
+    color:颜色
+
+    如果画横向的条形图，则需要加参数orientation = ‘horizontal’
+    但是相应的left要变为left = 0，同时加bottom = index,height变为width，width变为height
+    画横向条形图有另一个函数plt.barh()，这样就不用显式的写参数orientation = ‘horizontal’了，其他参数照常
+
+    拓展：
+    画并列图：
+    plt.bar(left = index,height = x,width=0.4,color = 'red')
+    plt.bar(left = index + 0.4,height = y,width = 0.4,color = 'blue')
+    解释：第二个图的left参数要比第一个平移一个宽度，既可以实现条形的图的并列
+
+    画层叠图：
+    plt.bar(left = index,height = x,width=0.4,color = 'red')
+    plt.bar(left = index,bottom = x,height = y,width = 0.4,color = 'blue')
+    解释：第二个图的bottom = x,即从第一个图的数据开始画，这样就可以实现层叠的效果
+
+    画直方图：plt.hist()
+    mu = 100
+    sigma = 20
+    x = mu + sigma * np.random.randn(2000)
+    plt.hist(x,bins=10,color='red',normed=False)
+    plt.show()
+
+    参数说明：
+    bins:直方图的个数
+    color:颜色
+    normed:是否标准化，如标准化则纵轴显示为所占比值，若不标准化，纵轴显示个数
+
+    画饼状图：plt.pie()
+    x = [20,45,50,10,80,20]
+    labels = ['A','B','C','D','E','F']
+    plt.axes(aspect = 1)      ## 使横纵坐标比为1，画起来是正圆
+    explode = [0,0,0,0,0.05,0]   ## 每个饼离开圆心的距离列表，突出显示之作用
+    plt.pie(x = x,labels = labels,autopct='%.0f%%',shadow=True,explode=explode)
+    plt.show()
+
+    参数说明：
+    x:数据
+    labels:标签
+    autopct:百分比
+    shadow:是否有阴影
+    explode:突出显示
+
+    画箱线图：plt.boxplot()
+    np.random.seed(100)
+    data = np.random.normal(size = (100,4))   ## 同时画四组数据
+    labels = list('ABCD')
+    plt.boxplot(x=data,labels=labels)  
+    plt.show()
+
+    画多个子图
+    x = np.arange(1,20)
+    plt.subplot(221)
+    plt.plot(x,x)
+    plt.subplot(222)
+    plt.plot(x,x**2)
+    plt.subplot(223)
+    plt.plot(x,np.log(x))
+    plt.subplot(224)
+    plt.plot(x,np.sin(x))
+    plt.show()
+
+    画网格函数:plt.grid(True,color = '',linestyle = '',linewidth = '')
+
+    画图例函数：plt.legend([‘图例1’，‘图例2’...]loc = 0/1/2/...,ncol = 1/2/3..)
+    loc:位置，0表示自适应，1表示右上角，2表示左上角，3表示左下角，4表示右下角。。。
+    ncol:图例的列数
+    图例列表也可以写在画图函数里，用label参数，具体如下：
+    x = np.arange(1,11)
+    plt.plot(x,x*2,label = 'Normal')
+    plt.plot(x,x*3,label = 'Fast')
+    plt.plot(x,x*4,label = 'Faster')
+    plt.legend(loc = 0,ncol = 2)  #也可以写成下面形式
+    plt.legend(['Normal','Fast','Faster'],loc = 2,ncol = 1)
+    plt.show()
+
+    调整坐标轴范围
+    有三个函数都可以调整坐标轴范围，分别是
+    plt.axis([xmin,xmax,ymin,ymax]):参数为一个列表，分别表示x和y的最小最大值
+    plt.xlim([xmin,xmax])：参数为一个列表，来限制x的最小最大值，也可以只写一个参数，表示限制一头儿
+    plt.ylim([ymin,ymax])：同上
+

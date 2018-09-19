@@ -1,0 +1,5 @@
+1.EXcel
+2.SQL/Mysql
+3.常用数据挖掘方法(逻辑回归、因子分析、决策树、时间序列)
+4.R/Python
+5.SAS/SPSS
